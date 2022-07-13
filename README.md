@@ -8,3 +8,4 @@
 - Creating an order
 - Updating an order
 - Cancelling an order
+These can be implemented within a single lambda function

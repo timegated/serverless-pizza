@@ -1,0 +1,11 @@
+{
+  "lambda": {
+    "role": "pizza-app-executor",
+    "name": "pizza-app",
+    "region": "us-east-1"
+  },
+  "api": {
+    "id": "9yj45e97g1",
+    "module": "api"
+  }
+}
