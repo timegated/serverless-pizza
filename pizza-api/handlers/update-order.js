@@ -1,6 +1,6 @@
 const orders = require('../data/orders.json');
 
-const updateOrder = ({pizzaId, newProperty}) => {
+const updateOrder = (pizzaId, newProperty) => {
   if (!pizzaId) {
     throw new Error('order does not exist and cannot be updated.');
   }

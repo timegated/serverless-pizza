@@ -17,7 +17,7 @@ api.get('/pizzas/{id}', (request) => {
 });
 
 api.get('/orders/{id}', (request) => {
-  return getOrders(request.params.pizzaId);
+  return getOrders(request.pathParams.id);
 }, {
   success: 200,
   error: 404,
@@ -31,14 +31,14 @@ api.post('/orders', (request) => {
 });
 
 api.put('/orders/{id}', (request) => {
-  return updateOrder(request.body);
+  return updateOrder(request.pathParams.id, request.body);
 }, {
   success: 200,
   error: 400,
 });
 
 api.delete('/orders/{id}', (request) => {
-  return deleteOrder(request.params.pizzaId);
+  return deleteOrder(request.pathParams.id);
 }, {
   success: 200,
   error: 400,
