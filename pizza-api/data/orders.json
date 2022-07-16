@@ -1,0 +1,18 @@
+[
+  {
+    "pizzaId": 1,
+    "address": "1 way street"
+  },
+  {
+    "pizzaId": 2,
+    "address": "2 way street"
+  },
+  {
+    "pizzaId": 3,
+    "address": "3 way street"
+  },
+  {
+    "pizzaId": 4,
+    "address": "4 way street"
+  }
+]
