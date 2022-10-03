@@ -9,7 +9,7 @@ const updateOrder = (orderId, request) => {
   return docClient.put({
     TableName: 'pizza-orders',
     Item: {
-      orderId: 'some-id',
+      orderId: request.orderId,
       pizza: request.pizza,
       address: request.address,
       orderStatus: 'pending'

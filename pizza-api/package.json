@@ -12,6 +12,7 @@
   "dependencies": {
     "aws-sdk": "^2.1178.0",
     "claudia": "^5.14.0",
-    "claudia-api-builder": "^4.1.2"
+    "claudia-api-builder": "^4.1.2",
+    "uuid": "^9.0.0"
   }
 }
