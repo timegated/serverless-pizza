@@ -1,13 +1,26 @@
-const orders = require('../data/orders.json');
+const AWS = require('aws-sdk');
 
-const deleteOrder = (pizzaId) => {
-  if (!pizzaId) {
+const docClient = new AWS.DynamoDB.DocumentClient();
+
+const deleteOrder = (orderId) => {
+  if (!orderId) {
     throw new Error('requested order cannot be deleted');
   }
 
-  orders.filter(order => order.pizzaId !== pizzaId);
-
-  return orders;
+return docClient.delete({
+    TableName: 'pizza-orders',
+    Key: {
+      orderId: orderId,
+    }
+  }).promise()
+    .then(res => {
+      console.log('Order successfully deleted');
+      return res;
+    })
+    .catch(e => {
+      console.error('Something went wrong with deleting your order!', e)
+      throw e;
+    });
 };
 
 module.exports = deleteOrder;
