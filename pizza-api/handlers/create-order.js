@@ -13,6 +13,7 @@ const createOrder = (request) => {
       orderId: uuidv4(),
       pizza: request.pizza,
       address: request.address,
+      timestamp: new Date().toISOString().replace(/T|Z/g, " "),
       orderStatus: 'pending'
     }
   }).promise()

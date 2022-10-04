@@ -1,17 +1,43 @@
+const AWS = require('aws-sdk');
+
+const docClient = new AWS.DynamoDB.DocumentClient();
+
 const orders = require('../data/orders.json');
 
-const getOrders = (pizzaId) => {
-  const pizzaIdNum = parseInt(pizzaId, 10);
-
-  if (!pizzaIdNum) {
-    return orders;
+const getOrders = (orderId) => {
+  if (orderId === "all") {
+    return docClient.query({
+      TableName: 'pizza-orders',
+      KeyConditionExpression: "orderStatus = :orderStatus",
+      ExpressionAttributeValues: {
+        ':orderStatus': 'pending'
+      }
+    }).promise()
+    .then(res => {
+      console.log('Orders retrieved');
+      return res;
+    })
+    .catch(e => {
+      console.error('Something went wrong with deleting your order!', e)
+      throw e;
+    });;
   }
 
-  const order = orders.find((order) => {
-    return order.pizzaId === pizzaIdNum;
-  });
-
-  if (order) return order;
+  if (orderId) return docClient.query({
+    TableName: 'pizza-orders',
+    KeyConditionExpression: `orderId = :orderId`,
+    ExpressionAttributeValues: {
+      ':orderId': orderId
+    }
+  }).promise()
+  .then(res => {
+    console.log('Order successfully retrieved');
+    return res;
+  })
+  .catch(e => {
+    console.error('Something went wrong with deleting your order!', e)
+    throw e;
+  });;
 
   throw new Error('the order you requested was not found');
 };
