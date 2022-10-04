@@ -2,14 +2,13 @@ const AWS = require('aws-sdk');
 
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-const orders = require('../data/orders.json');
-
 const getOrders = (orderId) => {
   if (orderId === "all") {
     return docClient.query({
       TableName: 'pizza-orders',
-      KeyConditionExpression: "orderStatus = :orderStatus",
+      KeyConditionExpression: 'orderId = :orderId and orderStatus = :orderStatus',
       ExpressionAttributeValues: {
+        'orderId': orderId,
         ':orderStatus': 'pending'
       }
     }).promise()
@@ -25,7 +24,7 @@ const getOrders = (orderId) => {
 
   if (orderId) return docClient.query({
     TableName: 'pizza-orders',
-    KeyConditionExpression: `orderId = :orderId`,
+    KeyConditionExpression: 'orderId = :orderId',
     ExpressionAttributeValues: {
       ':orderId': orderId
     }
