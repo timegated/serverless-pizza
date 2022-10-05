@@ -1,5 +1,4 @@
 const AWS = require('aws-sdk');
-const {v4: uuidv4} = require('uuid');
 const docClient = new AWS.DynamoDB.DocumentClient();
 const rp = require('minimal-request-promise');
 
@@ -20,12 +19,13 @@ const createOrder = (request) => {
       deliveryAddress: request.address,
       webhookUrl: 'https://whpcvzntil.execute-api.eu-central-1.amazonaws.com/chapter4_1/delivery',
     })
-  }).then((rawResponse) => {
-    JSON.parse(rawResponse.body).then((response) => {
+  })
+  .then((rawResponse) => JSON.parse(rawResponse.body))
+  .then((response) => {
       return docClient.put({
         TableName: 'pizza-orders',
         Item: {
-          orderId: uuidv4(),
+          orderId: response.deliveryId,
           pizza: request.pizza,
           address: request.address,
           timestamp: new Date().toISOString().replace(/T|Z/g, " "),
@@ -33,10 +33,11 @@ const createOrder = (request) => {
         }
       }).promise()
     })
-  }).then((res) => {
-    console.log('Order is saved', res);
-    return res;
-  }).catch(err => {
+  .then((res) => {
+      console.log('Order is saved', res);
+      return res;
+})
+  .catch(err => {
     console.log('Order was not saved');
     throw err;
   })
