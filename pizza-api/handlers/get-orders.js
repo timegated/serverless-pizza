@@ -4,22 +4,9 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 
 const getOrders = (orderId) => {
   if (orderId === "all") {
-    return docClient.query({
+    return docClient.scan({
       TableName: 'pizza-orders',
-      KeyConditionExpression: 'orderId = :orderId and orderStatus = :orderStatus',
-      ExpressionAttributeValues: {
-        'orderId': orderId,
-        ':orderStatus': 'pending'
-      }
-    }).promise()
-    .then(res => {
-      console.log('Orders retrieved');
-      return res;
-    })
-    .catch(e => {
-      console.error('Something went wrong with deleting your order!', e)
-      throw e;
-    });;
+    }).promise().then(result => result.Items);
   }
 
   if (orderId) return docClient.query({

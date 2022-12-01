@@ -4,7 +4,7 @@ const rp = require('minimal-request-promise');
 
 const createOrder = (request) => {
   if (!request || !request.pizza || !request.address) {
-    throw new Error('To order pizza please provide a pizza type and adress')
+    throw new Error('To order pizza please provide a pizza type and address')
   }
   
   return rp.post('https://some-like-it-hot.effortless-serverless.com/delivery',
